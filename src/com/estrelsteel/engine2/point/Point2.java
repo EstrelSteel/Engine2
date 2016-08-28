@@ -21,7 +21,7 @@ public class Point2 extends AbstractedPoint {
 //	}
 	
 	public boolean equals(Object other) {
-		if(grid.equals((Grid) other)) {
+		if(grid.equals(((Point2) other).getGrid())) {
 			return super.equals(other);
 		}
 		return false;

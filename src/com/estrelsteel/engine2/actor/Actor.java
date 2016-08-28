@@ -102,10 +102,11 @@ public class Actor implements Renderable {
 		}
 		if((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640) {
 			if((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640) {
-				
 				ctx.drawImage(getRunningAnimation().getCurrentImage().getImage(),
 						(int) (getLocation().getTop().getX() - x), (int) (getLocation().getTop().getY() - y),
 						(int) (getLocation().getWidth()), (int) (getLocation().getHeight()), null);
+//				ctx.drawRect((int) (getLocation().getTop().getX() - x), (int) (getLocation().getTop().getY() - y),
+//						(int) (getLocation().getWidth()), (int) (getLocation().getHeight()));
 			}
 		}
 		return ctx;

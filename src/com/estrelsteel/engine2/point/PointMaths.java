@@ -27,4 +27,8 @@ public class PointMaths {
 		centre.setY(rect.getTop().getY() + rect.getHeight() / 2);
 		return centre;
 	}
+	
+	public static AbstractedPoint getMidpoint(AbstractedPoint point1, AbstractedPoint point2) {
+		return new AbstractedPoint((point1.getX() + point2.getX()) / 2, (point1.getY() + point2.getY()) / 2);
+	}
 }

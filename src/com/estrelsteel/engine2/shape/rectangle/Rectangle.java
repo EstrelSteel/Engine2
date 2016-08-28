@@ -30,7 +30,8 @@ public class Rectangle extends AbstractedRectangle {
 	}
 	
 	public boolean equals(Object other) {
-		if(((Point2) getTop()).equals(((Rectangle) other).getTop()) && ((Point2) getBottom()).equals(((Rectangle) other).getBottom())) {
+		if(((Point2) getTop()).equals(((Rectangle) other).getTop()) 
+				&& ((Point2) getBottom()).equals(((Rectangle) other).getBottom())) {
 			return true;
 		}
 		return false;
