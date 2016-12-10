@@ -1,4 +1,4 @@
-package com.estrelsteel.engine2.shape;
+package com.estrelsteel.engine2.shape.collide;
 
 import com.estrelsteel.engine2.point.AbstractedPoint;
 import com.estrelsteel.engine2.shape.rectangle.AbstractedRectangle;

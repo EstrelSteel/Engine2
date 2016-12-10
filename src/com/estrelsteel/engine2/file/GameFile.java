@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.estrelsteel.engine2.Engine2;
 
 public class GameFile {
@@ -23,6 +25,9 @@ public class GameFile {
 	
 	public static String getCurrentPath() {
 		File f = new File(System.getProperty("java.class.path"));
+		if(f.getParentFile().getAbsolutePath() == null) {
+			return JOptionPane.showInputDialog("Error when getting game files path. Please enter it manually...", "");
+		}
 		return f.getParentFile().getAbsolutePath().toString();
 	}
 	

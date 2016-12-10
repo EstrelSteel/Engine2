@@ -38,7 +38,7 @@ public class Sound implements Saveable {
 	
 	public synchronized void play() {
 		if(clip != null && clip.isRunning()) {
-			FloatControl volume = (FloatControl) SFX.getSounds().get(1).getClip().getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			volume.setValue(vol);
 		}
 		if(clip == null || !clip.isRunning()) {
@@ -47,7 +47,7 @@ public class Sound implements Saveable {
 				clip = AudioSystem.getClip();
 				AudioInputStream ais = AudioSystem.getAudioInputStream(file);
 				clip.open(ais);
-				FloatControl volume = (FloatControl) SFX.getSounds().get(1).getClip().getControl(FloatControl.Type.MASTER_GAIN);
+				FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 				volume.setValue(vol);
 			}
 			catch (IOException e) {

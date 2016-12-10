@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import com.estrelsteel.engine2.image.Animation;
 import com.estrelsteel.engine2.image.Renderable;
 import com.estrelsteel.engine2.shape.Rotation;
+import com.estrelsteel.engine2.shape.collide.Collision;
+import com.estrelsteel.engine2.shape.collide.RectangleCollideArea;
 import com.estrelsteel.engine2.shape.rectangle.Rectangle;
 import com.estrelsteel.engine2.world.FrozenWorld;
 import com.estrelsteel.engine2.world.World;
@@ -18,6 +20,7 @@ public class Actor implements Renderable {
 	private ArrayList<Animation> animations;
 	private int animation;
 	private boolean sortable;
+	private Collision collide;
 	
 	public Actor(String name, Rectangle loc) {
 		this.name = name;
@@ -25,6 +28,7 @@ public class Actor implements Renderable {
 		this.rotation = new Rotation(0.0);
 		this.animations = new ArrayList<Animation>();
 		this.sortable = true;
+		this.collide = new Collision(false, new RectangleCollideArea(loc));
 	}
 	
 	public Actor(String name, Rectangle loc, Rotation rotation) {
@@ -33,6 +37,7 @@ public class Actor implements Renderable {
 		this.rotation = rotation;
 		this.animations = new ArrayList<Animation>();
 		this.sortable = true;
+		this.collide = new Collision(false, new RectangleCollideArea(loc));
 	}
 	
 	public String getName() {
@@ -57,6 +62,10 @@ public class Actor implements Renderable {
 	
 	public int getRunningAnimationNumber() {
 		return animation;
+	}
+	
+	public Collision getCollision() {
+		return collide;
 	}
 	
 	public Graphics2D render(Graphics2D ctx, FrozenWorld world) {
@@ -145,5 +154,9 @@ public class Actor implements Renderable {
 	
 	public void setSortable(boolean sortable) {
 		this.sortable = sortable;
+	}
+	
+	public void setCollision(Collision collide) {
+		this.collide = collide;
 	}
 }

@@ -1,7 +1,8 @@
-package com.estrelsteel.engine2.shape.rectangle;
+package com.estrelsteel.engine2.shape.collide;
 
 import com.estrelsteel.engine2.point.AbstractedPoint;
-import com.estrelsteel.engine2.shape.CollideArea;
+import com.estrelsteel.engine2.shape.rectangle.AbstractedRectangle;
+import com.estrelsteel.engine2.shape.rectangle.Rectangle;
 
 public class RectangleCollideArea implements CollideArea {
 
@@ -9,6 +10,10 @@ public class RectangleCollideArea implements CollideArea {
 	
 	public RectangleCollideArea(Rectangle rect) {
 		this.rect = rect;
+	}
+	
+	public Rectangle getRectangle() {
+		return rect;
 	}
 	
 	@Override
@@ -28,6 +33,10 @@ public class RectangleCollideArea implements CollideArea {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setRectangle(Rectangle rect) {
+		this.rect = rect;
 	}
 	
 }

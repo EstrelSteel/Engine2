@@ -37,9 +37,11 @@ public class Image {
 		}
 		catch (IOException e1) {
 			try {
+				System.err.println(src);
 				img = ImageIO.read(is);
 			}
 			catch (IOException e) {
+				System.err.println(src);
 				e.printStackTrace();
 			}
 		}

@@ -1,4 +1,4 @@
-package com.estrelsteel.engine2.shape;
+package com.estrelsteel.engine2.shape.collide;
 
 public class Collision {
 	private boolean collide;
