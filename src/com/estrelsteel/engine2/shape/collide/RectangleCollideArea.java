@@ -29,8 +29,10 @@ public class RectangleCollideArea implements CollideArea {
 
 	@Override
 	public boolean checkCollision(AbstractedRectangle collide) {
-		if(checkCollision(collide.getTop()) || checkCollision(collide.getBottom())) {
-			return true;
+		if(rect.getX() + rect.getWidth() >= collide.getX() && (rect.getX() <= collide.getX() || rect.getX() <= collide.getX() + collide.getWidth())) {
+			if(rect.getY() + rect.getHeight() >= collide.getY() && (rect.getY()<= collide.getY() || rect.getY() <= collide.getY() + collide.getHeight())) {
+				return true;
+			}
 		}
 		return false;
 	}

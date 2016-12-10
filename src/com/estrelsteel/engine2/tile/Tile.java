@@ -17,6 +17,7 @@ public class Tile extends Actor implements Saveable {
 		this.type = type;
 		getAnimations().add(type.getAnimation());
 		setRunningAnimationNumber(0);
+		getCollision().setCollide(type.doesCollide());
 	}
 	
 	public TileType getType() {
@@ -26,6 +27,7 @@ public class Tile extends Actor implements Saveable {
 	public void setType(TileType type) {
 		this.type = type;
 		setRunningAnimationNumber(type.getID());
+		getCollision().setCollide(type.doesCollide());
 	}
 
 	public String getIdentifier() {

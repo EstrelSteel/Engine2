@@ -21,8 +21,10 @@ public class Actor implements Renderable {
 	private int animation;
 	private boolean sortable;
 	private Collision collide;
+	private boolean hideOffScreen;
 	
 	public Actor(String name, Rectangle loc) {
+		this.hideOffScreen = true;
 		this.name = name;
 		this.loc = loc;
 		this.rotation = new Rotation(0.0);
@@ -32,6 +34,7 @@ public class Actor implements Renderable {
 	}
 	
 	public Actor(String name, Rectangle loc, Rotation rotation) {
+		this.hideOffScreen = true;
 		this.name = name;
 		this.loc = loc;
 		this.rotation = rotation;
@@ -90,8 +93,8 @@ public class Actor implements Renderable {
 //				getRunningAnimation().getCurrentImage().getImage().getHeight() / world.getGrid().moveToGrid(getLocation()).getHeight());
 		trans.scale(getLocation().getWidth() / getRunningAnimation().getCurrentImage().getImage().getWidth(), getLocation().getHeight() / getRunningAnimation().getCurrentImage().getImage().getHeight());
 		trans.rotate(getRotation().getRadians() + r);
-		if((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640) {
-			if((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640) {
+		if(!hideOffScreen || ((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640)) {
+			if(!hideOffScreen || ((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640)) {
 				
 				ctx.drawImage(getRunningAnimation().getCurrentImage().getImage(), trans, null);
 			}
@@ -109,8 +112,8 @@ public class Actor implements Renderable {
 		if(!getRunningAnimation().getCurrentImage().isImageLoaded()) {
 			getRunningAnimation().getCurrentImage().loadImage();
 		}
-		if((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640) {
-			if((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640) {
+		if(!hideOffScreen || ((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640)) {
+			if(!hideOffScreen || ((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640)) {
 				ctx.drawImage(getRunningAnimation().getCurrentImage().getImage(),
 						(int) (getLocation().getTop().getX() - x), (int) (getLocation().getTop().getY() - y),
 						(int) (getLocation().getWidth()), (int) (getLocation().getHeight()), null);
@@ -123,6 +126,10 @@ public class Actor implements Renderable {
 	
 	public boolean isSortable() {
 		return sortable;
+	}
+	
+	public boolean doHideOffScreen() {
+		return hideOffScreen;
 	}
 	
 	public boolean equals(Object other) {
@@ -158,5 +165,10 @@ public class Actor implements Renderable {
 	
 	public void setCollision(Collision collide) {
 		this.collide = collide;
+	}
+	
+	public Actor setHideOffScreen(boolean hide) {
+		this.hideOffScreen = hide;
+		return this;
 	}
 }

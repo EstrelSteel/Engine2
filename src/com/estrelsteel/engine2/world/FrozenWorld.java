@@ -4,8 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+import com.estrelsteel.engine2.actor.Actor;
+import com.estrelsteel.engine2.chunk.Chunk;
 import com.estrelsteel.engine2.grid.Grid;
 import com.estrelsteel.engine2.image.Renderable;
+import com.estrelsteel.engine2.shape.collide.CollideArea;
 
 public class FrozenWorld {
 	private ArrayList<Renderable> objects;
@@ -40,6 +43,30 @@ public class FrozenWorld {
 			return true;
 		}
 		return false;
+	}
+	
+	public static boolean checkCollide(ArrayList<Renderable> objects, CollideArea area, Renderable r1) {
+		for(Renderable r : objects) {
+			if(r != r1) {
+				if(r instanceof Actor) {
+					if(((Actor) r).getCollision().doesCollide()) {
+						if(area.checkCollision(r.getLocation())) {
+							return true;
+						}
+					}
+				}
+				else if(r instanceof Chunk) {
+					if(checkCollide(((Chunk) r).getObjects(), area, r1)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkCollide(CollideArea area, Renderable r) {
+		return checkCollide(objects, area, r);
 	}
 	
 	/**
