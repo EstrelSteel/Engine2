@@ -45,27 +45,27 @@ public class FrozenWorld {
 		return false;
 	}
 	
-	public static boolean checkCollide(ArrayList<Renderable> objects, CollideArea area, Renderable r1) {
+	public static Renderable checkCollide(ArrayList<Renderable> objects, CollideArea area, Renderable r1) {
 		for(Renderable r : objects) {
 			if(r != r1) {
 				if(r instanceof Actor) {
 					if(((Actor) r).getCollision().doesCollide()) {
 						if(area.checkCollision(r.getLocation())) {
-							return true;
+							return r;
 						}
 					}
 				}
 				else if(r instanceof Chunk) {
-					if(checkCollide(((Chunk) r).getObjects(), area, r1)) {
-						return true;
+					if(checkCollide(((Chunk) r).getObjects(), area, r1) != null) {
+						return r;
 					}
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 	
-	public boolean checkCollide(CollideArea area, Renderable r) {
+	public Renderable checkCollide(CollideArea area, Renderable r) {
 		return checkCollide(objects, area, r);
 	}
 	
