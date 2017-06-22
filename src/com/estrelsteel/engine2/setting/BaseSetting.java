@@ -17,6 +17,9 @@ public abstract class BaseSetting implements Saveable {
 	
 	public BaseSetting(String name) {
 		this.name = name;
+		if(types == null) {
+			loadTypes();
+		}
 	}
 	
 	public static void loadTypes() {

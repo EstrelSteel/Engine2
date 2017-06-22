@@ -4,6 +4,9 @@ import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 
 import com.estrelsteel.engine2.events.RenderEvent;
@@ -41,6 +44,8 @@ public class Engine2 extends Canvas implements Runnable {
 	public static String devPath = "";
 	public static final PixelGrid pixels = new PixelGrid();
 	
+	private boolean mac_pressandhold_starting;
+	
 	public WindowSettings getWindowSettings() {
 		return windowSettings;
 	}
@@ -54,6 +59,22 @@ public class Engine2 extends Canvas implements Runnable {
 	}
 	
 	public synchronized void start() {
+		if(System.getProperty("os.name").startsWith("Mac")) {
+			try {
+				Process p = Runtime.getRuntime().exec("defaults read -g ApplePressAndHoldEnabled");
+
+				BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()) );
+				mac_pressandhold_starting = Boolean.parseBoolean(in.readLine());
+				in.close();
+				if(mac_pressandhold_starting) {
+					Runtime.getRuntime().exec("defaults write -g ApplePressAndHoldEnabled false");
+				}
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		stats.setRunning(true);
 		
 		devPath = GameFile.getDataPath();
@@ -75,6 +96,15 @@ public class Engine2 extends Canvas implements Runnable {
 				thread.join();
 			}
 			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if(mac_pressandhold_starting) {
+			try {
+				Runtime.getRuntime().exec("defaults write -g ApplePressAndHoldEnabled true");
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

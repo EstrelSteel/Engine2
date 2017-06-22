@@ -23,12 +23,13 @@ public class IntSetting extends BaseSetting {
 
 	@Override
 	public BaseSetting load(GameFile file, int line) {
+		BaseSetting bs = new IntSetting("null");
 		String[] args = file.getLines().get(line).split(" ");
 		if(args[0].trim().equalsIgnoreCase(getIdentifier()) && args[2].trim().equalsIgnoreCase("=")) {
-			setName(args[1].trim());
-			value = Integer.parseInt(args[3].trim());
+			bs.setName(args[1].trim());
+			bs.setValue(Integer.parseInt(args[3].trim()));
 		}
-		return this;
+		return bs;
 	}
 
 	@Override

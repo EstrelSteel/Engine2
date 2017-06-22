@@ -23,12 +23,13 @@ public class DoubleSetting extends BaseSetting {
 
 	@Override
 	public BaseSetting load(GameFile file, int line) {
+		BaseSetting bs = new DoubleSetting("null");
 		String[] args = file.getLines().get(line).split(" ");
 		if(args[0].trim().equalsIgnoreCase(getIdentifier()) && args[2].trim().equalsIgnoreCase("=")) {
-			setName(args[1].trim());
-			value = Double.parseDouble(args[3].trim());
+			bs.setName(args[1].trim());
+			bs.setValue(Double.parseDouble(args[3].trim()));
 		}
-		return this;
+		return bs;
 	}
 
 	@Override

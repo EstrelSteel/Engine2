@@ -65,8 +65,30 @@ public class FrozenWorld {
 		return null;
 	}
 	
+	public static Renderable checkCollideIgnoreDeclaration(ArrayList<Renderable> objects, CollideArea area, Renderable r1) {
+		for(Renderable r : objects) {
+			if(r != r1) {
+				if(r instanceof Actor) {
+					if(area.checkCollision(r.getLocation())) {
+						return r;
+					}
+				}
+				else if(r instanceof Chunk) {
+					if(checkCollide(((Chunk) r).getObjects(), area, r1) != null) {
+						return r;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	public Renderable checkCollide(CollideArea area, Renderable r) {
 		return checkCollide(objects, area, r);
+	}
+	
+	public Renderable checkCollideIgnoreDeclaration(CollideArea area, Renderable r) {
+		return checkCollideIgnoreDeclaration(objects, area, r);
 	}
 	
 	/**

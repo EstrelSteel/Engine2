@@ -1,0 +1,1 @@
+ACTOR ( STRING ( test ) , RECTANGLE ( POINT2 ( 0 , 0 ) , POINT2 ( 1 , 1 ) ) ) 

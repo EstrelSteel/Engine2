@@ -1,14 +1,12 @@
 package com.estrelsteel.engine2.setting;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import com.estrelsteel.engine2.file.GameFile;
 import com.estrelsteel.engine2.file.Saveable;
-import com.estrelsteel.engine2.setting.BaseSetting;
 
-@SuppressWarnings("hiding")
-public class Settings<BaseSetting> implements Iterator<BaseSetting>, Saveable {
+public class Settings implements Saveable {
 	
 	private String name;
 	private String path;
@@ -28,14 +26,8 @@ public class Settings<BaseSetting> implements Iterator<BaseSetting>, Saveable {
 		return path;
 	}
 	
-	@Override
-	public boolean hasNext() {
-		return settings.iterator().hasNext();
-	}
-
-	@Override
-	public BaseSetting next() {
-		return settings.iterator().next();
+	public ArrayList<BaseSetting> getSettings() {
+		return settings;
 	}
 	
 	public void setName(String name) {
@@ -46,14 +38,38 @@ public class Settings<BaseSetting> implements Iterator<BaseSetting>, Saveable {
 		this.path = path;
 	}
 
+	public void setSettings(ArrayList<BaseSetting> settings) {
+		this.settings = settings;
+	}
+	
 	@Override
 	public String getIdentifier() {
 		return "SET";
 	}
+	
+	public BaseSetting findSetting(String name) {
+		for(BaseSetting s : settings) {
+			if(s.getName().equalsIgnoreCase(name)) {
+				return s;
+			}
+		}
+		return null;
+	}
 
-	@SuppressWarnings("unchecked")
+	public Settings load() {
+		GameFile file = new GameFile(path);
+		try {
+			file.setLines(file.readFile());
+			return load(file, 0);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@Override
-	public Settings<BaseSetting> load(GameFile file, int line) {
+	public Settings load(GameFile file, int line) {
 		if(file.getLines().get(line).equalsIgnoreCase(getIdentifier())) {
 			if(com.estrelsteel.engine2.setting.BaseSetting.types == null) {
 				com.estrelsteel.engine2.setting.BaseSetting.loadTypes();
@@ -68,9 +84,17 @@ public class Settings<BaseSetting> implements Iterator<BaseSetting>, Saveable {
 		}
 		return this;
 	}
+	
+	public GameFile save() {
+		GameFile file = new GameFile(path);
+		return save(file);
+	}
 
 	@Override
 	public GameFile save(GameFile file) {
-		return null;
+		for(BaseSetting s : settings) {
+			s.save(file);
+		}
+		return file;
 	}
 }

@@ -7,13 +7,24 @@ import com.estrelsteel.engine2.shape.rectangle.Rectangle;
 public class PerspectiveRectangleArea implements CollideArea {
 
 	private Rectangle rect;
+	private double ratio;
 	
 	public PerspectiveRectangleArea(Rectangle rect) {
 		this.rect = rect;
+		this.ratio = 0.8;
+	}
+	
+	public PerspectiveRectangleArea(Rectangle rect, double ratio) {
+		this.rect = rect;
+		this.ratio = ratio;
 	}
 	
 	public Rectangle getRectangle() {
 		return rect;
+	}
+	
+	public double getRatio() {
+		return ratio;
 	}
 	
 	@Override
@@ -30,7 +41,7 @@ public class PerspectiveRectangleArea implements CollideArea {
 	@Override
 	public boolean checkCollision(AbstractedRectangle collide) {
 		if(rect.getX() + rect.getWidth() >= collide.getX() && (rect.getX() <= collide.getX() || rect.getX() <= collide.getX() + collide.getWidth())) {
-			if(rect.getY() + rect.getHeight() >= collide.getY() && (rect.getY() + rect.getHeight() * 0.8 <= collide.getY() || rect.getY() + rect.getHeight() * 0.8 <= collide.getY() + collide.getHeight())) {
+			if(rect.getY() + rect.getHeight() >= collide.getY() && (rect.getY() + rect.getHeight() * ratio <= collide.getY() || rect.getY() + rect.getHeight() * ratio <= collide.getY() + collide.getHeight())) {
 				return true;
 			}
 		}
@@ -41,4 +52,7 @@ public class PerspectiveRectangleArea implements CollideArea {
 		this.rect = rect;
 	}
 	
+	public void setRatio(double ratio) {
+		this.ratio = ratio;
+	}
 }

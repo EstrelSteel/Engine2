@@ -1,3 +1,4 @@
+
 package com.estrelsteel.engine2;
 
 import java.applet.Applet;
@@ -64,6 +65,7 @@ public class Launcher extends Applet {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
 		engine.start();
 	}
 

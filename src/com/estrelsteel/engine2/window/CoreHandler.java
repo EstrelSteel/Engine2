@@ -24,9 +24,11 @@ public class CoreHandler extends WindowAdapter implements WindowStateListener, W
     }
 
 	public void focusGained(FocusEvent e) {
+//		System.out.println("focus gained");
 	}
 
 	public void focusLost(FocusEvent e) {
+//		System.out.println("focus lost");
 	}
 
 	public void componentHidden(ComponentEvent e) {
