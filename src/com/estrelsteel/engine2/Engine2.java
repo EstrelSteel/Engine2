@@ -86,6 +86,14 @@ public class Engine2 extends Canvas implements Runnable {
 		
 		thread = new Thread(this, windowSettings.getTitle() + windowSettings.getVersion() + "_main");
 		thread.start();
+		if(mac_pressandhold_starting) {
+			try {
+				Runtime.getRuntime().exec("defaults write -g ApplePressAndHoldEnabled true");
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public synchronized void stop() {
