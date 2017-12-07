@@ -7,9 +7,20 @@ import com.estrelsteel.engine2.shape.rectangle.AbstractedRectangle;
 public class PointMaths {
 	public static Rotation getDirectionTowards(AbstractedPoint point, AbstractedPoint target) {
 		Rotation rotation = new Rotation(0);
-		double width = point.getWidth(target);
-		double height = point.getHeight(target);
-		rotation.setRadians(Double.parseDouble(Engine2.ROUNDING_FORMAT.format(Math.atan(height / width))));
+		double width = target.getX() - point.getX();
+		double height = target.getY() - point.getY();
+		double rad = Math.atan(height / width);
+		if(width < 0 && height > 0) {
+			rad = rad + Math.PI;
+		}
+		else if(width < 0 && height < 0) {
+			rad = rad + Math.PI;
+		}
+		else if(width > 0 && height < 0) {
+			rad = rad + 2 * Math.PI;
+		}
+//		System.err.println(rad);
+		rotation.setRadians(Double.parseDouble(Engine2.ROUNDING_FORMAT.format(rad)));
 		return rotation;
 	}
 	

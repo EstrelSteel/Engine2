@@ -24,11 +24,17 @@ public class Animation {
 		this.running = true;
 	}
 	
+	public static Animation build(GameFile file, int line, String name, int id, int maxWait) {
+		Animation a = build(file, line, name, id);
+		a.setMaxWaitTime(maxWait);
+		return a;
+	}
+	
 	public static Animation build(GameFile file, int line, String name, int id) {
 		Animation a = new Animation(name, id);
 		String[] args;
 		for(int i = line; i < file.getLines().size(); i++) {
-			args = file.getLines().get(line).split(" ");
+			args = file.getLines().get(i).split(" ");
 			if(args[0].trim().equalsIgnoreCase("+cimg")) {
 				a.getFrames().add(new ConfinedImage(GameFile.getDataPath() + args[1].trim(), QuickRectangle.location(
 						Double.parseDouble(args[2].trim()) * 16, Double.parseDouble(args[3].trim()) * 16,

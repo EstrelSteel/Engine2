@@ -40,7 +40,7 @@ public class Engine2 extends Canvas implements Runnable {
 	public final TickEvent TICK_EVENT = new TickEvent();
 	public final StopEvent STOP_EVENT = new StopEvent();
 	
-	public static final DecimalFormat ROUNDING_FORMAT = new DecimalFormat("0.####");
+	public static DecimalFormat ROUNDING_FORMAT = new DecimalFormat("0.####");
 	public static String devPath = "";
 	public static final PixelGrid pixels = new PixelGrid();
 	

@@ -62,8 +62,8 @@ public class Text implements Renderable, Saveable {
 		}
 		ctx.setFont(font);
 		ctx.setColor(colour);
-		ctx.drawString(text, (int) (world.getGrid().moveToGrid(loc).getTop().getX() + x),
-				(int) (world.getGrid().moveToGrid(loc).getTop().getY() + y));
+		ctx.drawString(text, (int) (world.getGrid().moveToGrid(loc).getTop().getX() - x),
+				(int) (world.getGrid().moveToGrid(loc).getTop().getY() - y));
 		return ctx;
 	}
 
