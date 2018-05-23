@@ -79,7 +79,7 @@ public class TileType implements Saveable {
 				type.setID(Integer.parseInt(args[1].trim()));
 				type.setName(args[2].trim());
 				type.setCollide(Boolean.parseBoolean(args[3].trim()));
-				type.setAnimation(Animation.build(file, i + 1, name, 0));
+				type.setAnimation(animation.load(file, i + 1));
 				
 				types.add(type);
 			}

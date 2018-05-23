@@ -16,6 +16,7 @@ import com.estrelsteel.engine2.events.TickEvent;
 import com.estrelsteel.engine2.file.GameFile;
 import com.estrelsteel.engine2.grid.PixelGrid;
 import com.estrelsteel.engine2.point.AbstractedPoint;
+import com.estrelsteel.engine2.resource.ResourceReference;
 import com.estrelsteel.engine2.shape.rectangle.AbstractedRectangle;
 import com.estrelsteel.engine2.window.CoreHandler;
 import com.estrelsteel.engine2.window.Stats;
@@ -27,6 +28,8 @@ public class Engine2 extends Canvas implements Runnable {
 	public CoreHandler coreHandler;
 	public static boolean showFPS = true;
 	public static boolean development = false;
+	
+	public static ResourceReference GLOBAL_RESOURCE_REFERENCE = new ResourceReference();
 	
 	private Thread thread; 
 	

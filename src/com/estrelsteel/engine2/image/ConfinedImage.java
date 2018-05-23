@@ -9,6 +9,12 @@ public class ConfinedImage extends Image {
 
 	private AbstractedRectangle loc;
 	
+	public ConfinedImage(String src, int id, AbstractedRectangle loc) {
+		super(src, id);
+		this.loc = loc;
+	}
+	
+	@Deprecated
 	public ConfinedImage(String src, AbstractedRectangle loc) {
 		super(src);
 		this.loc = loc;

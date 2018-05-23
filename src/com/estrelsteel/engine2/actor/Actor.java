@@ -2,73 +2,20 @@ package com.estrelsteel.engine2.actor;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
-import com.estrelsteel.engine2.image.Animation;
-import com.estrelsteel.engine2.image.Renderable;
 import com.estrelsteel.engine2.shape.Rotation;
-import com.estrelsteel.engine2.shape.collide.Collision;
-import com.estrelsteel.engine2.shape.collide.RectangleCollideArea;
 import com.estrelsteel.engine2.shape.rectangle.Rectangle;
 import com.estrelsteel.engine2.world.FrozenWorld;
 import com.estrelsteel.engine2.world.World;
 
-public class Actor implements Renderable {
-	private String name;
-	private Rectangle loc;
-	private Rotation rotation;
-	private ArrayList<Animation> animations;
-	private int animation;
-	private boolean sortable;
-	private Collision collide;
-	private boolean hideOffScreen;
+public class Actor extends UndrawnActor {
 	
 	public Actor(String name, Rectangle loc) {
-		this.hideOffScreen = true;
-		this.name = name;
-		this.loc = loc;
-		this.rotation = new Rotation(0.0);
-		this.animations = new ArrayList<Animation>();
-		this.sortable = true;
-		this.collide = new Collision(false, new RectangleCollideArea(loc));
+		super(name, loc);
 	}
 	
 	public Actor(String name, Rectangle loc, Rotation rotation) {
-		this.hideOffScreen = true;
-		this.name = name;
-		this.loc = loc;
-		this.rotation = rotation;
-		this.animations = new ArrayList<Animation>();
-		this.sortable = true;
-		this.collide = new Collision(false, new RectangleCollideArea(loc));
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public Rectangle getLocation() {
-		return loc;
-	}
-	
-	public Rotation getRotation() {
-		return rotation;
-	}
-	
-	public ArrayList<Animation> getAnimations() {
-		return animations;
-	}
-	
-	public Animation getRunningAnimation() {
-		return getAnimations().get(animation);
-	}
-	
-	public int getRunningAnimationNumber() {
-		return animation;
-	}
-	
-	public Collision getCollision() {
-		return collide;
+		super(name, loc, rotation);
 	}
 	
 	public Graphics2D render(Graphics2D ctx, FrozenWorld world) {
@@ -93,8 +40,8 @@ public class Actor implements Renderable {
 //				getRunningAnimation().getCurrentImage().getImage().getHeight() / world.getGrid().moveToGrid(getLocation()).getHeight());
 		trans.scale(getLocation().getWidth() / getRunningAnimation().getCurrentImage().getImage().getWidth(), getLocation().getHeight() / getRunningAnimation().getCurrentImage().getImage().getHeight());
 		trans.rotate(getRotation().getRadians() + r);
-		if(!hideOffScreen || ((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640)) {
-			if(!hideOffScreen || ((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640)) {
+		if(!doHideOffScreen() || ((getLocation().getX() - x >= 0 || getLocation().getX() + getLocation().getWidth() - x >= 0) && getLocation().getX() - x <= 640)) {
+			if(!doHideOffScreen() || ((getLocation().getY() - y >= 0 || getLocation().getY() + getLocation().getHeight() - y >= 0) && getLocation().getY() - y <= 640)) {
 				
 				ctx.drawImage(getRunningAnimation().getCurrentImage().getImage(), trans, null);
 			}
@@ -112,8 +59,8 @@ public class Actor implements Renderable {
 		if(!getRunningAnimation().getCurrentImage().isImageLoaded()) {
 			getRunningAnimation().getCurrentImage().loadImage();
 		}
-		if(!hideOffScreen || ((loc.getX() - x >= 0 || loc.getX() + loc.getWidth() - x >= 0) && loc.getX() - x <= 640)) {
-			if(!hideOffScreen || ((loc.getY() - y >= 0 || loc.getY() + loc.getHeight() - y >= 0) && loc.getY() - y <= 640)) {
+		if(!doHideOffScreen() || ((getLocation().getX() - x >= 0 || getLocation().getX() + getLocation().getWidth() - x >= 0) && getLocation().getX() - x <= 640)) {
+			if(!doHideOffScreen() || ((getLocation().getY() - y >= 0 || getLocation().getY() + getLocation().getHeight() - y >= 0) && getLocation().getY() - y <= 640)) {
 				ctx.drawImage(getRunningAnimation().getCurrentImage().getImage(),
 						(int) (getLocation().getTop().getX() - x), (int) (getLocation().getTop().getY() - y),
 						(int) (getLocation().getWidth()), (int) (getLocation().getHeight()), null);
@@ -124,51 +71,10 @@ public class Actor implements Renderable {
 		return ctx;
 	}
 	
-	public boolean isSortable() {
-		return sortable;
-	}
-	
-	public boolean doHideOffScreen() {
-		return hideOffScreen;
-	}
-	
 	public boolean equals(Object other) {
-		if(name.equals(((Actor) other).getName())) {
+		if(getName().equals(((Actor) other).getName())) {
 			return true;
 		}
 		return false;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void setLocation(Rectangle loc) {
-		this.loc = loc;
-	}
-	
-	public void setRotation(Rotation rotation) {
-		this.rotation = rotation;
-	}
-	
-	public void setAnimations(ArrayList<Animation> animations) {
-		this.animations = animations;
-	}
-	
-	public void setRunningAnimationNumber(int animation) {
-		this.animation = animation;
-	}
-	
-	public void setSortable(boolean sortable) {
-		this.sortable = sortable;
-	}
-	
-	public void setCollision(Collision collide) {
-		this.collide = collide;
-	}
-	
-	public Actor setHideOffScreen(boolean hide) {
-		this.hideOffScreen = hide;
-		return this;
 	}
 }

@@ -74,4 +74,12 @@ public class AbstractedRectangle {
 	public void setY(double y) {
 		top.setY(y);
 	}
+	
+	public void setWidth(double width) {
+		bottom.setX(top.getX() + width);
+	}
+	
+	public void setHeight(double height) {
+		bottom.setY(top.getY() + height);
+	}
 }

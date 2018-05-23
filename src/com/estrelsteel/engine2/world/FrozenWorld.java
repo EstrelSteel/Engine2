@@ -39,7 +39,7 @@ public class FrozenWorld {
 	}
 	
 	public boolean equals(Object other) {
-		if(grid.equals(((FrozenWorld) other).getGrid()) && objects.equals(((FrozenWorld) other).getObjects())) {
+		if(getGrid().equals(((FrozenWorld) other).getGrid()) && getObjects().equals(((FrozenWorld) other).getObjects())) {
 			return true;
 		}
 		return false;
@@ -102,7 +102,7 @@ public class FrozenWorld {
 	 */
 	public Graphics2D renderWorld(Graphics2D ctx) {
 		for(int i = 0; i < objects.size(); i++) {
-			ctx = objects.get(i).render(ctx, this);
+			ctx = getObjects().get(i).render(ctx, this);
 		}
 		return ctx;
 	}
@@ -117,7 +117,7 @@ public class FrozenWorld {
 	 */
 	public Graphics2D simpleRenderWorld(Graphics2D ctx) {
 		for(int i = 0; i < objects.size(); i++) {
-			ctx = objects.get(i).simpleRender(ctx, this);
+			ctx = getObjects().get(i).simpleRender(ctx, this);
 		}
 		return ctx;
 	}

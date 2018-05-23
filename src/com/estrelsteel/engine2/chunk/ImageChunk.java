@@ -54,7 +54,7 @@ public class ImageChunk extends Chunk {
 			}
 			ctx.dispose();
 			
-			saveImg = new Image("null");
+			saveImg = new Image("null", -1);
 			saveImg.setImage(img);
 		}
 	}

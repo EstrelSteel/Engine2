@@ -40,7 +40,7 @@ public class Launcher extends Applet {
 		return;
 	}
 	
-	public void boot() {
+	public JFrame boot() {
 		engine.setFocusable(true);
 		engine.setMinimumSize(new Dimension((int) engine.getWindowSettings().getRectangle().getWidth(), (int) engine.getWindowSettings().getRectangle().getHeight()));
 		engine.setMaximumSize(new Dimension((int) engine.getWindowSettings().getRectangle().getWidth(), (int) engine.getWindowSettings().getRectangle().getHeight()));
@@ -67,6 +67,7 @@ public class Launcher extends Applet {
 		frame.setVisible(true);
 		
 		engine.start();
+		return frame;
 	}
 
 	

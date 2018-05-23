@@ -9,16 +9,16 @@ public class PointMaths {
 		Rotation rotation = new Rotation(0);
 		double width = target.getX() - point.getX();
 		double height = target.getY() - point.getY();
-		double rad = Math.atan(height / width);
-		if(width < 0 && height > 0) {
-			rad = rad + Math.PI;
-		}
-		else if(width < 0 && height < 0) {
-			rad = rad + Math.PI;
-		}
-		else if(width > 0 && height < 0) {
-			rad = rad + 2 * Math.PI;
-		}
+		double rad = Math.atan2(-height, width);
+//		if(width < 0 && height > 0) {
+//			rad = rad + Math.PI;
+//		}
+//		else if(width < 0 && height < 0) {
+//			rad = rad + Math.PI;
+//		}
+//		else if(width > 0 && height < 0) {
+//			rad = rad + 2 * Math.PI;
+//		}
 //		System.err.println(rad);
 		rotation.setRadians(Double.parseDouble(Engine2.ROUNDING_FORMAT.format(rad)));
 		return rotation;

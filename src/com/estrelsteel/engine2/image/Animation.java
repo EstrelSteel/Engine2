@@ -2,34 +2,55 @@ package com.estrelsteel.engine2.image;
 
 import java.util.ArrayList;
 
+import com.estrelsteel.engine2.Engine2;
 import com.estrelsteel.engine2.file.GameFile;
+import com.estrelsteel.engine2.file.Saveable;
 import com.estrelsteel.engine2.shape.rectangle.QuickRectangle;
 
-public class Animation {
+public class Animation implements Saveable {
 	private String name;
 	private int id;
-	private ArrayList<Image> frames;
+	private ArrayList<Image> framesImage;
+	private ArrayList<Integer> framesReference;
 	private int frame;
 	private int wait;
 	private int maxWait;
 	private boolean running;
+	private boolean highUseage;
 	
-	public Animation(String name, int id) {
+	public Animation(String name, int id, boolean highUseage) {
 		this.name = name;
 		this.id = id;
-		this.frames = new ArrayList<Image>();
+		this.framesImage = new ArrayList<Image>();
+		this.framesReference = new ArrayList<Integer>();
 		this.frame = 0;
 		this.wait = 0;
 		this.maxWait = 1;
 		this.running = true;
+		this.highUseage = highUseage;
 	}
 	
+	@Deprecated
+	public Animation(String name, int id) {
+		this.name = name;
+		this.id = id;
+		this.framesImage = new ArrayList<Image>();
+		this.framesReference = new ArrayList<Integer>();
+		this.frame = 0;
+		this.wait = 0;
+		this.maxWait = 1;
+		this.running = true;
+		this.highUseage = true;
+	}
+	
+	@Deprecated
 	public static Animation build(GameFile file, int line, String name, int id, int maxWait) {
 		Animation a = build(file, line, name, id);
 		a.setMaxWaitTime(maxWait);
 		return a;
 	}
 	
+	@Deprecated
 	public static Animation build(GameFile file, int line, String name, int id) {
 		Animation a = new Animation(name, id);
 		String[] args;
@@ -59,8 +80,17 @@ public class Animation {
 		return id;
 	}
 	
+	@Deprecated
 	public ArrayList<Image> getFrames() {
-		return frames;
+		return framesImage;
+	}
+	
+	public ArrayList<Image> getFramesImage() {
+		return framesImage;
+	}
+	
+	public ArrayList<Integer> getFramesReference() {
+		return framesReference;
 	}
 	
 	public int getCurrentFrame() {
@@ -76,7 +106,10 @@ public class Animation {
 	}
 	
 	public Image getCurrentImage() {
-		return frames.get(frame);
+		if(highUseage) {
+			return framesImage.get(frame);
+		}
+		return (Image) Engine2.GLOBAL_RESOURCE_REFERENCE.getResources().get(framesReference.get(frame));
 	}
 	
 	public Image run() {
@@ -86,16 +119,15 @@ public class Animation {
 				wait = 0;
 				frame = frame + 1;
 			}
-			if(frame >= frames.size()) {
+			if(frame >= framesReference.size()) {
 				frame = 0;
 			}
 		}
-		return frames.get(frame);
+		return getCurrentImage();
 	}
 	
 	public boolean equals(Object other) {
-		if(frames.equals(((Animation) other).getFrames()) && name.equals(((Animation) other).getName())
-				&& id == ((Animation) other).getID() && maxWait == ((Animation) other).getMaxWaitTime()) {
+		if(name.equals(((Animation) other).getName()) && id == ((Animation) other).getID() && maxWait == ((Animation) other).getMaxWaitTime()) {
 			return true;
 		}
 		return false;
@@ -109,8 +141,17 @@ public class Animation {
 		this.id = id;
 	}
 	
-	public void setFrames(ArrayList<Image> frames) {
-		this.frames = frames;
+	@Deprecated
+	public void setFrames(ArrayList<Image> framesImage) {
+		this.framesImage = framesImage;
+	}
+	
+	public void setFramesImage(ArrayList<Image> framesImage) {
+		this.framesImage = framesImage;
+	}
+	
+	public void setFramesReference(ArrayList<Integer> framesReference) {
+		this.framesReference = framesReference;
 	}
 	
 	public void setCurrentFrame(int frame) {
@@ -123,5 +164,59 @@ public class Animation {
 	
 	public void setMaxWaitTime(int maxWait) {
 		this.maxWait = maxWait;
+	}
+
+	public boolean isHighUseage() {
+		return highUseage;
+	}
+
+	public void setHighUseage(boolean highUseage) {
+		this.highUseage = highUseage;
+		loadHighUseage();
+	}
+
+	@Override
+	public String getIdentifier() {
+		return "ANI";
+	}
+
+	@Override
+	public Animation load(GameFile file, int line) {
+		String[] args = file.getLines().get(line).split(" ");
+		Animation a = null;
+		if(args[0].equalsIgnoreCase(getIdentifier())) {
+			//	ANI id name maxWait highUse src
+			a = new Animation(args[2], Integer.parseInt(args[1]));
+			a.setMaxWaitTime(Integer.parseInt(args[3]));
+			a.setHighUseage(Boolean.parseBoolean(args[4]));
+			loadFramesReference(args[5]);
+		}
+		return a;
+	}
+	
+	public void loadHighUseage() {
+		if(highUseage) {
+			framesImage = new ArrayList<Image>();
+			for(int i = 0; i < framesReference.size(); i++) {
+				framesImage.add(i, (Image) Engine2.GLOBAL_RESOURCE_REFERENCE.getResources().get(framesReference.get(i)));
+			}
+		}
+		framesImage = null;
+	}
+	
+	private void loadFramesReference(String ref) {
+		int id = -1;
+		for(int i = 0; i < ref.length(); i++) {
+			id = Integer.parseInt(ref.substring(i, i + 1));
+			framesReference.add(id);
+			if(highUseage) {
+				framesImage.add((Image) Engine2.GLOBAL_RESOURCE_REFERENCE.getResources().get(id));
+			}
+		}
+	}
+
+	@Override
+	public GameFile save(GameFile file) {
+		return file;
 	}
 }

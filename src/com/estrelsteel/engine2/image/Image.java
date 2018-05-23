@@ -7,12 +7,22 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class Image {
+import com.estrelsteel.engine2.resource.Resource;
+
+public class Image implements Resource {
+	private int id;
 	private BufferedImage img;
 	private String src;
 	
+	public Image(String src, int id) {
+		this.src = src;
+		this.id = id;
+	}
+	
+	@Deprecated
 	public Image(String src) {
 		this.src = src;
+		this.id = -1;
 	}
 	
 	public BufferedImage getImage() {
@@ -30,7 +40,7 @@ public class Image {
 		return false;
 	}
 	
-	public void loadImage() {
+	public Image loadImage() {
 		InputStream is = getClass().getResourceAsStream(src);
 		try {
 			img = (BufferedImage) ImageIO.read(new File(src));
@@ -45,8 +55,7 @@ public class Image {
 				e.printStackTrace();
 			}
 		}
-		
-		
+		return this;
 	}
 	
 	public boolean isImageLoaded() {
@@ -68,5 +77,10 @@ public class Image {
 	
 	public void setImage(BufferedImage img) {
 		this.img = img;
+	}
+
+	@Override
+	public int getID() {
+		return id;
 	}
 }
