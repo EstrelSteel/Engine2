@@ -6,5 +6,6 @@ import com.estrelsteel.engine2.shape.rectangle.AbstractedRectangle;
 public interface CollideArea {
 	public boolean checkCollision(AbstractedPoint point);
 	public boolean checkCollision(AbstractedRectangle rect);
+	public boolean checkCollision(CollideArea area);
 	public boolean equals(Object other);
 }

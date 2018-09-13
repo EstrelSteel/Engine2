@@ -42,14 +42,14 @@ public class DecayingVelocity extends Velocity {
 		return point;
 	}
 	
-	public void setVelocityX(double velocity) {
+	public DecayingVelocity setVelocityX(double velocity) {
 		startVelocityX = velocity;
-		super.setVelocityX(velocity);
+		return (DecayingVelocity) super.setVelocityX(velocity);
 	}
 	
-	public void setVelocityY(double velocity) {
+	public DecayingVelocity setVelocityY(double velocity) {
 		startVelocityY = velocity;
-		super.setVelocityY(velocity);
+		return (DecayingVelocity) super.setVelocityY(velocity);
 	}
 	
 	public void setStartVelocityX(double startVelocity) {

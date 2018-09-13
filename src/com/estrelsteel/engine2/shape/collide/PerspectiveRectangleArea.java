@@ -47,6 +47,17 @@ public class PerspectiveRectangleArea implements CollideArea {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean checkCollision(CollideArea area) {
+		if(area instanceof RectangleCollideArea) {
+			return checkCollision(((RectangleCollideArea) area).getRectangle());
+		}
+		if(area instanceof PerspectiveRectangleArea) {
+			return checkCollision(((PerspectiveRectangleArea) area).getRectangle());
+		}
+		return false;
+	}
 	
 	public void setRectangle(Rectangle rect) {
 		this.rect = rect;

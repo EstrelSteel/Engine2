@@ -69,6 +69,10 @@ public abstract class UndrawnActor implements Renderable {
 		return collide;
 	}
 	
+	public void updateCollision() {
+		collide.setCollideArea(new RectangleCollideArea(loc));
+	}
+	
 	public abstract Graphics2D render(Graphics2D ctx, FrozenWorld world);
 	
 	public abstract Graphics2D simpleRender(Graphics2D ctx, FrozenWorld world);

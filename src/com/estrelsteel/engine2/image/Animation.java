@@ -18,6 +18,18 @@ public class Animation implements Saveable {
 	private boolean running;
 	private boolean highUseage;
 	
+	public Animation() {
+		this.name = "NULL";
+		this.id = -1;
+		this.framesImage = new ArrayList<Image>();
+		this.framesReference = new ArrayList<Integer>();
+		this.frame = 0;
+		this.wait = 0;
+		this.maxWait = 1;
+		this.running = true;
+		this.highUseage = false;
+	}
+	
 	public Animation(String name, int id, boolean highUseage) {
 		this.name = name;
 		this.id = id;
@@ -179,19 +191,23 @@ public class Animation implements Saveable {
 	public String getIdentifier() {
 		return "ANI";
 	}
+	
+	public Animation load(String line) {
+		String[] args = line.split(" ");
+		if(args[0].equalsIgnoreCase(getIdentifier())) {
+			//	ANI id name maxWait highUse src
+			name = args[2];
+			id = Integer.parseInt(args[1]);
+			maxWait = Integer.parseInt(args[3]);
+			highUseage = Boolean.parseBoolean(args[4]);
+			loadFramesReference(args, 5);
+		}
+		return this;
+	}
 
 	@Override
 	public Animation load(GameFile file, int line) {
-		String[] args = file.getLines().get(line).split(" ");
-		Animation a = null;
-		if(args[0].equalsIgnoreCase(getIdentifier())) {
-			//	ANI id name maxWait highUse src
-			a = new Animation(args[2], Integer.parseInt(args[1]));
-			a.setMaxWaitTime(Integer.parseInt(args[3]));
-			a.setHighUseage(Boolean.parseBoolean(args[4]));
-			loadFramesReference(args[5]);
-		}
-		return a;
+		return load(file.getLines().get(line));
 	}
 	
 	public void loadHighUseage() {
@@ -204,10 +220,10 @@ public class Animation implements Saveable {
 		framesImage = null;
 	}
 	
-	private void loadFramesReference(String ref) {
+	private void loadFramesReference(String[] args, int start) {
 		int id = -1;
-		for(int i = 0; i < ref.length(); i++) {
-			id = Integer.parseInt(ref.substring(i, i + 1));
+		for(int i = start; i < args.length; i++) {
+			id = Integer.parseInt(args[i]);
 			framesReference.add(id);
 			if(highUseage) {
 				framesImage.add((Image) Engine2.GLOBAL_RESOURCE_REFERENCE.getResources().get(id));

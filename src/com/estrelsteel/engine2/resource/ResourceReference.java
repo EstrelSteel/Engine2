@@ -41,12 +41,14 @@ public class ResourceReference implements Saveable {
 		for(int i = line; i < file.getLines().size(); i++) {
 			args = file.getLines().get(i).split(" ");
 			if(args[0].trim().equalsIgnoreCase("+cimg")) {
+				//+cimg id src x y w h
 				id = Integer.parseInt(args[1].trim());
 				resources.put(id, new ConfinedImage(GameFile.getDataPath() + args[2].trim(), id, QuickRectangle.location(
 						Double.parseDouble(args[3].trim()) * 16, Double.parseDouble(args[4].trim()) * 16, 
 						Double.parseDouble(args[5].trim()), Double.parseDouble(args[6].trim()))));	
 			}
 			else if(args[0].trim().equalsIgnoreCase("+img")) {
+				//+img id src
 				id = Integer.parseInt(args[1].trim());
 				resources.put(id, new Image(GameFile.getDataPath() + args[2].trim(), id));
 			}

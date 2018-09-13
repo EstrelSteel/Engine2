@@ -50,7 +50,7 @@ public class FrozenWorld {
 			if(r != r1) {
 				if(r instanceof Actor) {
 					if(((Actor) r).getCollision().doesCollide()) {
-						if(area.checkCollision(r.getLocation())) {
+						if(area.checkCollision(((Actor) r).getCollision().getCollideArea())) {
 							return r;
 						}
 					}
@@ -69,7 +69,7 @@ public class FrozenWorld {
 		for(Renderable r : objects) {
 			if(r != r1) {
 				if(r instanceof Actor) {
-					if(area.checkCollision(r.getLocation())) {
+					if(area.checkCollision(((Actor) r).getCollision().getCollideArea())) {
 						return r;
 					}
 				}

@@ -20,6 +20,13 @@ public class Velocity {
 		return velocityY;
 	}
 	
+	public Velocity getAntiVelocity() {
+		Velocity v = new Velocity(0.0);
+		v.setVelocityX(-velocityX);
+		v.setVelocityY(-velocityY);
+		return v;
+	}
+	
 	public AbstractedPoint applyVelocity(AbstractedPoint point) {
 		double x = point.getX() + velocityX;
 		double y = point.getY() + velocityY;
@@ -30,11 +37,19 @@ public class Velocity {
 		return point;
 	}
 	
-	public void setVelocityX(double velocity) {
-		this.velocityX = velocity;
+	public Velocity applyVelocity(Velocity v) {
+		velocityX = velocityX - v.getVelocityX();
+		velocityY = velocityY - v.getVelocityY();
+		return this;
 	}
 	
-	public void setVelocityY(double velocity) {
+	public Velocity setVelocityX(double velocity) {
+		this.velocityX = velocity;
+		return this;
+	}
+	
+	public Velocity setVelocityY(double velocity) {
 		this.velocityY = velocity;
+		return this;
 	}
 }

@@ -36,6 +36,13 @@ public class Sound implements Saveable {
 		return clip;
 	}
 	
+	public synchronized void playOver() {
+		if(clip != null && clip.isRunning()) {
+			clip.stop();
+		}
+		play();
+	}
+	
 	public synchronized void play() {
 		if(clip != null && clip.isRunning()) {
 			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
