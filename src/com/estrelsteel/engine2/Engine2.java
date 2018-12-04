@@ -190,7 +190,6 @@ public class Engine2 extends Canvas implements Runnable {
 		ctx.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		ctx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		ctx.clearRect(0, 0, getWidth(), getHeight());
-		
 		RENDER_EVENT.render(ctx);
 		
 		ctx.dispose();

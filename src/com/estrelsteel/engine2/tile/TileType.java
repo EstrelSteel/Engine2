@@ -1,7 +1,7 @@
 package com.estrelsteel.engine2.tile;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.estrelsteel.engine2.file.GameFile;
 import com.estrelsteel.engine2.file.Saveable;
@@ -9,7 +9,7 @@ import com.estrelsteel.engine2.image.Animation;
 
 public class TileType implements Saveable {
 
-	public static ArrayList<TileType> types;
+	public static HashMap<Integer, TileType> types;
 	
 	private int id;
 	private String name;
@@ -20,6 +20,7 @@ public class TileType implements Saveable {
 		this.id = id;
 		this.name = name;
 		this.collide = false;
+		this.animation = new Animation();
 	}
 
 	public int getID() {
@@ -60,7 +61,7 @@ public class TileType implements Saveable {
 	}
 
 	@Override
-	public ArrayList<TileType> load(GameFile file, int line) {
+	public HashMap<Integer, TileType> load(GameFile file, int line) {
 		try {
 			file.updateLines();
 		} 
@@ -68,7 +69,7 @@ public class TileType implements Saveable {
 			e.printStackTrace();
 		}
 		if(types == null) {
-			types = new ArrayList<TileType>();
+			types = new HashMap<Integer, TileType>();
 		}
 		String[] args;
 		TileType type;
@@ -80,8 +81,8 @@ public class TileType implements Saveable {
 				type.setName(args[2].trim());
 				type.setCollide(Boolean.parseBoolean(args[3].trim()));
 				type.setAnimation(animation.load(file, i + 1));
-				
-				types.add(type);
+				animation = new Animation();
+				types.put(type.getID(), type);
 			}
 		}
 		return types;

@@ -108,8 +108,9 @@ public abstract class UndrawnActor implements Renderable {
 		this.animations = animations;
 	}
 	
-	public void setRunningAnimationNumber(int animation) {
+	public UndrawnActor setRunningAnimationNumber(int animation) {
 		this.animation = animation;
+		return this;
 	}
 	
 	public void setSortable(boolean sortable) {

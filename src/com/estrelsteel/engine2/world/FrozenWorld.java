@@ -46,6 +46,7 @@ public class FrozenWorld {
 	}
 	
 	public static Renderable checkCollide(ArrayList<Renderable> objects, CollideArea area, Renderable r1) {
+		Renderable sr;
 		for(Renderable r : objects) {
 			if(r != r1) {
 				if(r instanceof Actor) {
@@ -56,8 +57,9 @@ public class FrozenWorld {
 					}
 				}
 				else if(r instanceof Chunk) {
-					if(checkCollide(((Chunk) r).getObjects(), area, r1) != null) {
-						return r;
+					sr = checkCollide(((Chunk) r).getObjects(), area, r1);
+					if(sr != null) {
+						return sr;
 					}
 				}
 			}
@@ -66,6 +68,7 @@ public class FrozenWorld {
 	}
 	
 	public static Renderable checkCollideIgnoreDeclaration(ArrayList<Renderable> objects, CollideArea area, Renderable r1) {
+		Renderable sr;
 		for(Renderable r : objects) {
 			if(r != r1) {
 				if(r instanceof Actor) {
@@ -74,8 +77,9 @@ public class FrozenWorld {
 					}
 				}
 				else if(r instanceof Chunk) {
-					if(checkCollide(((Chunk) r).getObjects(), area, r1) != null) {
-						return r;
+					sr = checkCollideIgnoreDeclaration(((Chunk) r).getObjects(), area, r1);
+					if(sr != null) {
+						return sr;
 					}
 				}
 			}

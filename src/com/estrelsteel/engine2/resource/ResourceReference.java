@@ -28,6 +28,13 @@ public class ResourceReference implements Saveable {
 	public void setResources(HashMap<Integer, Resource> resources) {
 		this.resources = resources;
 	}
+	
+	public Image getImage(int id)  {
+		Resource r = resources.get(id);
+		if(r instanceof Image) return (Image) r;
+		System.err.println("INVALID REFERENCE LOAD:\n\t" + id + " is not an Image!");
+		return null;
+	}
 
 	@Override
 	public String getIdentifier() {

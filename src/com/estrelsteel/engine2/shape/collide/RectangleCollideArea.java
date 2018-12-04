@@ -18,10 +18,10 @@ public class RectangleCollideArea implements CollideArea {
 	
 	@Override
 	public boolean checkCollision(AbstractedPoint point) {
-		if(rect.getTop().getX() <= point.getX()
-				&& rect.getTop().getX() + rect.getWidth() >= point.getX()
-				&& rect.getTop().getY() <= point.getY()
-				&& rect.getTop().getY() + rect.getHeight() >= point.getY() ) {
+		if(rect.getTop().getX() < point.getX()
+				&& rect.getTop().getX() + rect.getWidth() > point.getX()
+				&& rect.getTop().getY() < point.getY()
+				&& rect.getTop().getY() + rect.getHeight() > point.getY() ) {
 			return true;
 		}
 		return false;
@@ -29,8 +29,8 @@ public class RectangleCollideArea implements CollideArea {
 
 	@Override
 	public boolean checkCollision(AbstractedRectangle collide) {
-		if(rect.getX() + rect.getWidth() >= collide.getX() && (rect.getX() <= collide.getX() || rect.getX() <= collide.getX() + collide.getWidth())) {
-			if(rect.getY() + rect.getHeight() >= collide.getY() && (rect.getY()<= collide.getY() || rect.getY() <= collide.getY() + collide.getHeight())) {
+		if(rect.getX() + rect.getWidth() > collide.getX() && (rect.getX() < collide.getX() || rect.getX() < collide.getX() + collide.getWidth())) {
+			if(rect.getY() + rect.getHeight() > collide.getY() && (rect.getY()< collide.getY() || rect.getY() < collide.getY() + collide.getHeight())) {
 				return true;
 			}
 		}

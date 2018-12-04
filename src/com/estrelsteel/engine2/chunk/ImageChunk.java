@@ -1,5 +1,6 @@
 package com.estrelsteel.engine2.chunk;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -45,8 +46,11 @@ public class ImageChunk extends Chunk {
 	
 	public void generateImage() {
 		if(getObjects() != null) {
-			BufferedImage img = new BufferedImage((int) getLocation().getWidth(), (int) getLocation().getHeight(), BufferedImage.TYPE_INT_RGB);
+			BufferedImage img = new BufferedImage((int) getLocation().getWidth(), (int) getLocation().getHeight(), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D ctx = img.createGraphics();
+			ctx.setComposite(AlphaComposite.Clear);
+			ctx.fillRect(0, 0, (int) getLocation().getWidth(), (int) getLocation().getHeight());
+			ctx.setComposite(AlphaComposite.Src);
 			World temp = new World(new PixelGrid());
 			temp.getMainCamera().setLocation(getLocation().getTop());
 			for(int i = 0; i < getObjects().size(); i++) {
@@ -96,8 +100,8 @@ public class ImageChunk extends Chunk {
 				}
 			}
 			else {
-				int i = world.getObjects().indexOf(this);
-				((Chunk) world.getObjects().get(i)).setSaveMe(true);
+//				int i = world.getObjects().indexOf(this);
+//				((Chunk) world.getObjects().get(i)).setSaveMe(true);
 			}
 			trans = null;
 		}
